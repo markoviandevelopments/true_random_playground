@@ -3,6 +3,8 @@
 #include <string.h>
 #include <curl/curl.h>
 
+#include NUM_BITS 100
+
 struct MemoryStruct {
     char *memory;
     size_t size;
@@ -33,7 +35,7 @@ int main(void) {
     curl_global_init(CURL_GLOBAL_ALL);
     curl_handle = curl_easy_init();
     if (curl_handle) {
-        curl_easy_setopt(curl_handle, CURLOPT_URL, "http://108.254.1.184:8003/bits?count=10");
+        curl_easy_setopt(curl_handle, CURLOPT_URL, "http://108.254.1.184:8003/bits?count=100");
         curl_easy_setopt(curl_handle, CURLOPT_WRITEFUNCTION, WriteCallback);
         curl_easy_setopt(curl_handle, CURLOPT_WRITEDATA, (void *)&chunk);
         curl_easy_setopt(curl_handle, CURLOPT_USERAGENT, "libcurl-agent/1.0");
@@ -46,13 +48,13 @@ int main(void) {
             char *array_start = strchr(chunk.memory, '[');
             if (array_start) {
                 array_start++; // Skip '['
-                int bits[10];
-                for (int i = 0; i < 10; i++) {
+                int bits[NUM_BITS];
+                for (int i = 0; i < NUM_BITS; i++) {
                     bits[i] = array_start[2 * i] - '0';
                 }
                 // Now bits[] contains the decoded buffer; print it as an example
                 printf("Decoded bits: ");
-                for (int i = 0; i < 10; i++) {
+                for (int i = 0; i < NUM_BITS; i++) {
                     printf("%d ", bits[i]);
                 }
                 printf("\n");
