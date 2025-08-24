@@ -3,7 +3,7 @@
 #include <string.h>
 #include <curl/curl.h>
 
-#include NUM_BITS 100
+#define NUM_BITS 100
 
 struct MemoryStruct {
     char *memory;
