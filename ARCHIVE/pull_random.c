@@ -58,16 +58,6 @@ int main(void) {
                     printf("%d ", bits[i]);
                 }
                 printf("\n");
-
-
-                int a = 0;
-                int *ptr = &a;
-                for (int i=0; i<16;i++){
-
-                }
-
-
-
             } else {
                 printf("Failed to find bits array in response.\n");
             }
