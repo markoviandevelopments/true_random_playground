@@ -3,7 +3,7 @@
 #include <string.h>
 #include <curl/curl.h>
 
-#define NUM_BITS 100
+#define NUM_BITS 10000
 
 struct MemoryStruct {
     char *memory;
@@ -35,7 +35,7 @@ int main(void) {
     curl_global_init(CURL_GLOBAL_ALL);
     curl_handle = curl_easy_init();
     if (curl_handle) {
-        curl_easy_setopt(curl_handle, CURLOPT_URL, "http://108.254.1.184:8003/bits?count=100");
+        curl_easy_setopt(curl_handle, CURLOPT_URL, "http://108.254.1.184:8003/bits?count=10000");
         curl_easy_setopt(curl_handle, CURLOPT_WRITEFUNCTION, WriteCallback);
         curl_easy_setopt(curl_handle, CURLOPT_WRITEDATA, (void *)&chunk);
         curl_easy_setopt(curl_handle, CURLOPT_USERAGENT, "libcurl-agent/1.0");
@@ -59,12 +59,21 @@ int main(void) {
                 }
                 printf("\n");
 
-
+                char w[999999];
                 int a = 0;
                 int *ptr = &a;
-                for (int i=0; i<16;i++){
 
-                }
+                for (int j=0;j<1024;j++){
+                    a = 0;
+                    for (int i=0; i<8;i++){
+                        if (bits[i + 8 * j] == 1) {
+                            *ptr |= (1 << i);
+                        }
+                    }
+                    w[j] = (char) a;
+            }
+
+                printf("Random Integer: %s\n", w);
 
 
 
